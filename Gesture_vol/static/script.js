@@ -8,7 +8,7 @@ let volumeHistoryData = [];
 window.onload = function () {
 
 
-/* ===================== VOLUME vs DISTANCE GRAPH ===================== */
+/* VOLUME vs DISTANCE GRAPH */
 
 const ctx1 = document.getElementById('distanceChart').getContext('2d');
 
@@ -39,7 +39,7 @@ distanceChart = new Chart(ctx1, {
 });
 
 
-/* ===================== VOLUME HISTORY GRAPH ===================== */
+/*  VOLUME HISTORY GRAPH  */
 
 const ctx2 = document.getElementById('confidenceChart').getContext('2d');
 
@@ -97,7 +97,7 @@ fetch("/data")
         }
 
 
-        /* ================= VOLUME BAR ================= */
+        /*VOLUME BAR*/
 
         const volumeBar = document.getElementById("volume-level");
         const volumeValue = Math.max(0, Math.min(100, data.volume));
@@ -117,7 +117,7 @@ fetch("/data")
         document.getElementById("volume-text").innerText = volumeValue + "%";
 
 
-        /* ================= VOLUME vs DISTANCE GRAPH ================= */
+        /*  VOLUME vs DISTANCE GRAPH */
 
         if (distanceData.length > 50) {
 
@@ -140,7 +140,7 @@ fetch("/data")
         distanceChart.update();
 
 
-        /* ================= VOLUME HISTORY GRAPH ================= */
+        /* VOLUME HISTORY GRAPH */
 
         if (volumeHistoryData.length > 50) {
 
@@ -157,7 +157,7 @@ fetch("/data")
         confidenceChart.update();
 
 
-        /* ================= DETECTION STATUS ================= */
+        /*DETECTION STATUS*/
 
         const status = document.getElementById("detect-status");
         const accuracyText = document.getElementById("accuracy");

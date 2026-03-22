@@ -8,7 +8,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import math
 import time
 
-# ================== DISTANCE → VOLUME FUNCTION ==================
+#  DISTANCE VOLUME FUNCTION 
 def map_distance_to_volume(distance, min_dist, max_dist):
     distance = np.clip(distance, min_dist, max_dist)
     normalized = (distance - min_dist) / (max_dist - min_dist)
@@ -17,14 +17,14 @@ def map_distance_to_volume(distance, min_dist, max_dist):
 
 app = Flask(__name__)
 
-# ================== SYSTEM VOLUME ==================
+#  SYSTEM VOLUME 
 devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(
     IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 minVol, maxVol, _ = volume.GetVolumeRange()
 
-# ================== MEDIAPIPE ==================
+#MEDIAPIPE
 mp_hands = mp.solutions.hands
 hands = mp_hands.Hands(
     max_num_hands=2,
@@ -35,7 +35,7 @@ mp_draw = mp.solutions.drawing_utils
 
 cap = cv2.VideoCapture(0)
 
-# ================== GLOBAL STATE ==================
+#  GLOBAL STATE 
 current_gesture = "None"
 gesture_emoji = ""
 volume_percent = 0
@@ -100,7 +100,7 @@ def generate_frames():
 
             hand_count = len(results.multi_hand_landmarks)
 
-            # ================== CLOSEST HAND PRIORITY ==================
+            #CLOSEST HAND PRIORITY 
             chosen_hand = None
             chosen_label = None
             closest_score = 0
@@ -149,7 +149,7 @@ def generate_frames():
                 * volume_step_percent
             )
 
-            # ================== GESTURES ==================
+            # GESTURES 
             current_gesture = "None"
             gesture_emoji = ""
 
@@ -196,7 +196,7 @@ def generate_frames():
                 elif fingers == [0, 1, 1, 1, 0]:
                     current_gesture = "Three"
 
-            # ================== SMOOTHING ==================
+            #SMOOTHING 
             if force_exact:
                 volume_percent = raw_volume
             else:

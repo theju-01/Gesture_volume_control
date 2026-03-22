@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gesture Volume Control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LEFT PANEL -->
+    <div class="panel">
+
+        <h2>System Info</h2>
+
+        <div class="box">
+            <p>FPS: <span id="fps">0</span></p>
+            <p>Hands: <span id="hands">0</span></p>
+        </div>
+
+        <!-- Volume Box -->
+        <div class="box">
+            <h3>Volume Bar — <span id="volume-text">0%</span></h3>
+
+            <div class="volume-wrapper">
+                <div class="volume-bar">
+                    <div id="volume-level"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calibration -->
+        <div class="box">
+            <h3>Calibration Settings</h3>
+
+            <label>Minimum Pinch</label>
+            <input type="range" id="minPinch" min="0" max="150" value="20">
+
+            <label>Maximum Pinch</label>
+            <input type="range" id="maxPinch" min="100" max="300" value="200">
+
+            <label>Volume Step (%)</label>
+            <input type="range" id="volumeStep" min="1" max="20" value="5">
+
+            <button onclick="updateCalibration()">Apply</button>
+        </div>
+        <!-- Hand Detection Confidence Graph -->
+        <div class="box">
+            <h3>Volume History</h3>
+            <canvas id="confidenceChart"></canvas>
+        </div>
+
+        <!-- Performance -->
+        <div class="box">
+            <h2>Performance</h2>
+            <p>Latency: <span id="latency">0</span> ms</p>
+        </div>
+
+    </div>
+
+
+    <!-- CENTER PANEL -->
+    <div class="center-panel">
+
+        <!-- Gesture Info -->
+        <div class="box">
+            <h2>Gesture Info</h2>
+
+            <div class="gesture-name" id="gesture">None</div>
+            <div class="gesture-emoji" id="emoji"></div>
+
+            <p>Pinch Distance: <span id="pinch">0</span></p>
+        </div>
+
+
+        <!-- Camera -->
+        <div class="box camera-box">
+            <img src="{{ url_for('video_feed') }}" class="video-feed">
+        </div>
+
+
+        <!-- Detection Status -->
+        <div class="box">
+
+            <h2>Detection Status</h2>
+
+            <p>Status: <span id="detect-status">Initializing...</span></p>
+
+            <p>Accuracy: <span id="accuracy">0</span>%</p>
+
+            <div class="accuracy-bar">
+                <div id="accuracy-level"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- RIGHT PANEL -->
+    <div class="panel">
+
+        <!-- Graph -->
+        <div class="box">
+            <h2>Volume vs Finger distance graph </h2>
+            <canvas id="distanceChart"></canvas>
+        </div>
+
+
+        <!-- Distance Tracker -->
+        <div class="box">
+
+            <h2>Distance Tracker</h2>
+
+            <div class="distance-box">
+                <span id="distance-big">0</span>
+                <p>Millimeters</p>
+            </div>
+
+        </div>
+
+
+        <!-- Raw State -->
+        <div class="box">
+
+            <h3>Raw Distance State</h3>
+
+            <div id="distance-state" class="state-box">
+                None
+            </div>
+
+        </div>
+        <!--Gesture lock mode-->
+        <div class="box">
+
+            <h3>Gesture Lock Mode</h3>
+
+            <div id="lock-state" class="state-box">
+              Unlocked
+        </div>
+
+        <p>Hold ✊ for 2 seconds</p>
+
+        </div>
+    </div>
+
+</div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>
